@@ -1,4 +1,3 @@
-import requests
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
@@ -9,7 +8,7 @@ from app.models import Base
 from app.routers.admin_router import router as admin_router
 from app.routers.api_router import router as api_router
 from app.schemas import ProxyHeadersMiddleware
-from app.config import API_KEY, ADMIN_USER, ADMIN_PASS, BASE_DIR, TEST_TOKEN
+from app.config import API_KEY, ADMIN_USER, ADMIN_PASS, BASE_DIR
 
 if not API_KEY:
     raise ValueError("API_KEY belum diset!")
@@ -21,6 +20,12 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
+app.mount("/static", StaticFiles(directory=f"{BASE_DIR}/static"), name="static")
+
+@app.get("/favicon.ico")
+def favicon():
+    return FileResponse(f"{BASE_DIR}/static/favicon.ico")
+
 app.add_middleware(ProxyHeadersMiddleware)
 app.add_middleware(TrustedHostMiddleware, allowed_hosts=["*"])
 app.add_middleware(
@@ -30,25 +35,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-app.mount("/static", StaticFiles(directory=f"{BASE_DIR}/static"), name="static")
-
-@app.get("/favicon.ico")
-def favicon():
-    return FileResponse(f"{BASE_DIR}/static/favicon.ico")
-
-@app.get("/status")
-def status():
-    try:
-        headers = {"Authorization": f"Bearer {TEST_TOKEN}"}
-        res = requests.get(
-            "/quizizz?pin=762095",
-            headers=headers,
-            timeout=20,
-        )
-        return {"ok": res.status_code == 200}
-    except Exception:
-        return {"ok": False}
 
 app.include_router(admin_router)
 app.include_router(api_router)

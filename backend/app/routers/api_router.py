@@ -10,9 +10,22 @@ from app.dependencies import get_db, log_usage
 from app.services.license_service import get_license, get_license_status
 from app.services.device_binding_service import extract_device_info, validate_and_bind_device
 from app.services.cheatnetwork_service import get_cheatnetwork_account_for_license
-from app.config import CACHE_DURATION
+from app.config import CACHE_DURATION, TEST_TOKEN
 
-router = APIRouter(prefix="/api/api", tags=["api"])
+router = APIRouter(prefix="/api", tags=["api"])
+
+@router.get("/status")
+def status():
+    try:
+        headers = {"Authorization": f"Bearer {TEST_TOKEN}"}
+        res = requests.get(
+            "/quizizz?pin=762095",
+            headers=headers,
+            timeout=20,
+        )
+        return {"ok": res.status_code == 200}
+    except Exception:
+        return {"ok": False}
 
 @router.get("/check/{token}", response_model=LicenseResponse)
 def check_token(

@@ -19,7 +19,7 @@ if not ADMIN_USER or not ADMIN_PASS:
 
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
+app = FastAPI()
 
 app.add_middleware(ProxyHeadersMiddleware)
 app.add_middleware(TrustedHostMiddleware, allowed_hosts=["*"])

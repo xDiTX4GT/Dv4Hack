@@ -1,4 +1,4 @@
-const API_BASE_URL = "/api"
+const API_BASE_URL = ""
 
 let API_KEY = null;
 let licenseData = [];

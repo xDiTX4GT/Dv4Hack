@@ -42,7 +42,7 @@ def status():
     try:
         headers = {"Authorization": f"Bearer {TEST_TOKEN}"}
         res = requests.get(
-            "https://dv4hack.up.railway.app/quizizz?pin=762095",
+            "/quizizz?pin=762095",
             headers=headers,
             timeout=20,
         )

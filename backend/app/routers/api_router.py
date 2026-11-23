@@ -10,6 +10,7 @@ from app.dependencies import get_db, log_usage
 from app.services.license_service import get_license, get_license_status
 from app.services.device_binding_service import extract_device_info, validate_and_bind_device
 from app.services.cheatnetwork_service import get_cheatnetwork_account_for_license
+from app.services.http_client import cn_get, cn_json, cn_raise_for_status
 from app.config import CACHE_DURATION, TEST_TOKEN
 
 router = APIRouter(prefix="/api", tags=["api"])
@@ -122,13 +123,13 @@ def proxy_quizizz(
     try:
         cn_account = get_cheatnetwork_account_for_license(db, lic)
         headers = {"Cookie": f"token={cn_account.cookie_token}"}
-        res = requests.get(
+        res = cn_get(
             f"https://api.cheatnetwork.eu/quizizz/{pin}/answers",
             headers=headers,
             timeout=20,
         )
-        res.raise_for_status()
-        data = res.json()
+        cn_raise_for_status(res)
+        data = cn_json(res, context="Response CheatNetwork")
 
         if cached:
             cached.response_data = json.dumps(data)
@@ -140,6 +141,9 @@ def proxy_quizizz(
         log_usage(db, token, "quizizz", pin, 200)
         return data
 
+    except HTTPException as e:
+        log_usage(db, token, "quizizz", pin, e.status_code)
+        raise
     except requests.RequestException as e:
         log_usage(db, token, "quizizz", pin, 500)
         raise HTTPException(status_code=500, detail=f"Gagal ambil data: {str(e)}")
@@ -185,13 +189,13 @@ def proxy_kahoot(
     try:
         cn_account = get_cheatnetwork_account_for_license(db, lic)
         headers = {"Cookie": f"token={cn_account.cookie_token}"}
-        res = requests.get(
+        res = cn_get(
             f"https://api.cheatnetwork.eu/kahoot/{link}/answers",
             headers=headers,
             timeout=20,
         )
-        res.raise_for_status()
-        data = res.json()
+        cn_raise_for_status(res)
+        data = cn_json(res, context="Response CheatNetwork")
 
         if cached:
             cached.response_data = json.dumps(data)
@@ -203,6 +207,9 @@ def proxy_kahoot(
         log_usage(db, token, "kahoot", link, 200)
         return data
 
+    except HTTPException as e:
+        log_usage(db, token, "kahoot", link, e.status_code)
+        raise
     except requests.RequestException as e:
         log_usage(db, token, "kahoot", link, 500)
         raise HTTPException(status_code=500, detail=f"Gagal ambil data: {str(e)}")

@@ -7,3 +7,4 @@ SQLAlchemy
 starlette
 psycopg2-binary
 itsdangerous
+curl_cffi>=0.17

@@ -5,6 +5,7 @@ from sqlalchemy import func
 from sqlalchemy.orm import Session
 from app.models import License,  CheatNetworkAccount
 from app.dependencies import number_or_zero
+from app.services.http_client import cn_get, cn_json
 
 def get_cheatnetwork_account_for_license(db: Session, lic: License) -> CheatNetworkAccount:
     account = None
@@ -30,14 +31,12 @@ def get_cheatnetwork_account_for_license(db: Session, lic: License) -> CheatNetw
 
 def fetch_cheatnetwork_me(account: CheatNetworkAccount) -> dict:
     try:
-        res = requests.get(
+        res = cn_get(
             "https://api.cheatnetwork.eu/auth/me",
             headers={"Cookie": f"token={account.cookie_token}"},
             timeout=15,
         )
-        data = res.json()
-    except ValueError:
-        raise HTTPException(status_code=502, detail="Response CheatNetwork bukan JSON")
+        data = cn_json(res, context="Response CheatNetwork")
     except requests.RequestException as e:
         raise HTTPException(status_code=502, detail=f"Gagal ambil data CheatNetwork: {str(e)}")
 

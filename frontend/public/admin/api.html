@@ -297,7 +297,7 @@
         text.style.color = "white";
 
         try {
-          const res = await fetch("/status");
+          const res = await fetch("/api/status");
           const data = await res.json();
 
           dot.classList.remove("status-on", "status-off");

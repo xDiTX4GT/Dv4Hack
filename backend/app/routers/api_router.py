@@ -19,7 +19,7 @@ def status():
     try:
         headers = {"Authorization": f"Bearer {TEST_TOKEN}"}
         res = requests.get(
-            "/api/quizizz?pin=762095",
+            "https://dv4hack.vercel.app/api/quizizz?pin=762095",
             headers=headers,
             timeout=20,
         )

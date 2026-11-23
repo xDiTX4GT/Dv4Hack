@@ -3,8 +3,8 @@ from typing import Optional
 from fastapi import HTTPException
 from sqlalchemy import func
 from sqlalchemy.orm import Session
-from backend.app.models import License,  CheatNetworkAccount
-from backend.app.dependencies import number_or_zero
+from app.models import License,  CheatNetworkAccount
+from app.dependencies import number_or_zero
 
 def get_cheatnetwork_account_for_license(db: Session, lic: License) -> CheatNetworkAccount:
     account = None

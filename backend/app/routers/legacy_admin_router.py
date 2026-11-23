@@ -2,10 +2,10 @@ from datetime import datetime
 from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from backend.app.dependencies import get_db, verify_api_key
-from backend.app.services.license_service import get_all_licenses
-from backend.app.models import License, CheatNetworkAccount
-from backend.app.schemas import LicenseCreate
+from app.dependencies import get_db, verify_api_key
+from app.services.license_service import get_all_licenses
+from app.models import License, CheatNetworkAccount
+from app.schemas import LicenseCreate
 
 router = APIRouter(prefix="", tags=["adminlegacy"])
 

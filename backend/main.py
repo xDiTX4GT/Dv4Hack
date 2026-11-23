@@ -4,12 +4,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.middleware.trustedhost import TrustedHostMiddleware
-from backend.app.database import engine
-from backend.app.models import Base
-from backend.app.routers.admin_router import router as admin_router
-from backend.app.routers.api_router import router as api_router
-from backend.app.schemas import ProxyHeadersMiddleware
-from backend.app.config import API_KEY, ADMIN_USER, ADMIN_PASS, BASE_DIR, TEST_TOKEN
+from app.database import engine
+from app.models import Base
+from app.routers.admin_router import router as admin_router
+from app.routers.api_router import router as api_router
+from app.schemas import ProxyHeadersMiddleware
+from app.config import API_KEY, ADMIN_USER, ADMIN_PASS, BASE_DIR, TEST_TOKEN
 
 if not API_KEY:
     raise ValueError("API_KEY belum diset!")

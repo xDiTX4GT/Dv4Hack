@@ -4,13 +4,13 @@ from datetime import datetime, timedelta
 import json
 from fastapi import APIRouter,  Depends, HTTPException, Header
 from sqlalchemy.orm import Session
-from backend.app.schemas import LicenseResponse
-from backend.app.models import CacheQuizizz, CacheKahoot
-from backend.app.dependencies import get_db, log_usage
-from backend.app.services.license_service import get_license, get_license_status
-from backend.app.services.device_binding_service import extract_device_info, validate_and_bind_device
-from backend.app.services.cheatnetwork_service import get_cheatnetwork_account_for_license
-from backend.app.config import CACHE_DURATION
+from app.schemas import LicenseResponse
+from app.models import CacheQuizizz, CacheKahoot
+from app.dependencies import get_db, log_usage
+from app.services.license_service import get_license, get_license_status
+from app.services.device_binding_service import extract_device_info, validate_and_bind_device
+from app.services.cheatnetwork_service import get_cheatnetwork_account_for_license
+from app.config import CACHE_DURATION
 
 router = APIRouter(prefix="", tags=["api"])
 

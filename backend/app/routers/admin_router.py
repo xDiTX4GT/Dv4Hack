@@ -3,12 +3,12 @@ from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import APIKeyHeader
 from sqlalchemy.orm import Session
 from sqlalchemy import func, desc
-from backend.app.models import License, CacheQuizizz, CacheKahoot, SaleLog, UsageLog, CheatNetworkAccount
-from backend.app.dependencies import get_db, verify_api_key
-from backend.app.services.license_service import serialize_license
-from backend.app.services.cheatnetwork_service import fetch_cheatnetwork_me, serialize_cheatnetwork_account, resolve_cheatnetwork_account_id
-from backend.app.schemas import LoginRequest, CheatNetworkAccountCreate, LicenseCreate, SaleCreate
-from backend.app.config import API_KEY, ADMIN_USER, ADMIN_PASS
+from app.models import License, CacheQuizizz, CacheKahoot, SaleLog, UsageLog, CheatNetworkAccount
+from app.dependencies import get_db, verify_api_key
+from app.services.license_service import serialize_license
+from app.services.cheatnetwork_service import fetch_cheatnetwork_me, serialize_cheatnetwork_account, resolve_cheatnetwork_account_id
+from app.schemas import LoginRequest, CheatNetworkAccountCreate, LicenseCreate, SaleCreate
+from app.config import API_KEY, ADMIN_USER, ADMIN_PASS
 
 router = APIRouter(prefix="/api/admin", tags=["admin"])
 

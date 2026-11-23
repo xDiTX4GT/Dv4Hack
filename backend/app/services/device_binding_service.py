@@ -1,7 +1,7 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from datetime import datetime
-from backend.app.models import License
+from app.models import License
 
 def extract_device_info(authorization: str, x_device_id: str, user_agent: str) -> tuple[str, str]:
     if x_device_id and x_device_id.strip():

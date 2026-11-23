@@ -1,6 +1,6 @@
 from datetime import date
 from sqlalchemy.orm import Session
-from backend.app.models import License
+from app.models import License
 
 def get_license_status(lic):
     expiry = lic.expired

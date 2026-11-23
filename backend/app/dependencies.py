@@ -2,9 +2,9 @@ from datetime import datetime
 from fastapi import Depends, HTTPException
 from fastapi.security import APIKeyHeader
 from sqlalchemy.orm import Session
-from backend.app.config import API_KEY
-from backend.app.database import SessionLocal
-from backend.app.models import UsageLog
+from app.config import API_KEY
+from app.database import SessionLocal
+from app.models import UsageLog
 
 def get_db():
     db = SessionLocal()

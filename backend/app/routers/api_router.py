@@ -12,7 +12,7 @@ from app.services.device_binding_service import extract_device_info, validate_an
 from app.services.cheatnetwork_service import get_cheatnetwork_account_for_license
 from app.config import CACHE_DURATION
 
-router = APIRouter(prefix="/api/jarwis", tags=["api"])
+router = APIRouter(prefix="/api/api", tags=["api"])
 
 @router.get("/check/{token}", response_model=LicenseResponse)
 def check_token(

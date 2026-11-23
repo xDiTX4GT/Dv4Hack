@@ -18,7 +18,7 @@ if not ADMIN_USER or not ADMIN_PASS:
 
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI()
+app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
 
 app.mount("/static", StaticFiles(directory=f"{BASE_DIR}/static"), name="static")
 

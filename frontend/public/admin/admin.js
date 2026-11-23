@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://dv4hack.up.railway.app"
+const API_BASE_URL = "/api"
 
 let API_KEY = null;
 let licenseData = [];
